@@ -1,0 +1,44 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    encoders:
+        # Our user class and the algorithm we'll use to encode passwords
+        # https://symfony.com/doc/current/security.html#c-encoding-the-user-s-password
+        App\Entity\User: bcrypt
+
+    # https://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    providers:
+        database_users:
+            entity: { class: App\Entity\User, property: email }
+
+    firewalls:
+        gettoken:
+            pattern:  ^/api/getToken$
+            stateless: true
+            gfreeau_get_jwt:
+                # this is the default config
+                username_parameter: email
+                password_parameter: password
+                authentication_provider: security.authentication.provider.dao
+                user_checker: security.user_checker
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+        api:
+            pattern:   ^/api
+            stateless: true
+            anonymous: true
+            lexik_jwt: ~
+
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            anonymous: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/api/getToken$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
