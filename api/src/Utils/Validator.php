@@ -68,4 +68,15 @@ class Validator
 
         return $fullName;
     }
+
+    /**
+     * Validates a given coordinate
+     *
+     * @param float|int|string $lat Latitude
+     * @param float|int|string $long Longitude
+     * @return bool `true` if the coordinate is valid, `false` if not
+     */
+    public function validateLatLong($lat, $long) {
+        return preg_match('/^[-]?((([0-8]?[0-9])(\.(\d+))?)|(90(\.0+)?)),[-]?((((1[0-7][0-9])|([0-9]?[0-9]))(\.(\d+))?)|180(\.0+)?)$/', $lat.','.$long);
+    }
 }
