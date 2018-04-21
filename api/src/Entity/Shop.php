@@ -3,10 +3,11 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+use App\Controller\LikeShop;
 use App\Controller\ShopNearby;
 use App\Controller\ShopPreferred;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
 * @ApiResource(
@@ -22,6 +23,12 @@ use App\Controller\ShopPreferred;
 *         "method"="GET",
 *         "path"="/shops/preferred",
 *         "controller"=ShopPreferred::class,
+*         "defaults"={"_api_receive"=false}
+*     },
+*     "like-shop"={
+*         "method"="POST",
+*         "path"="/shops/{shopId}/like",
+*         "controller"=LikeShop::class,
 *         "defaults"={"_api_receive"=false}
 *     }
 * })

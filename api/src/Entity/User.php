@@ -3,10 +3,9 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Security\Core\User\UserInterface;
 use App\Controller\Register;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ApiResource(
@@ -58,7 +57,7 @@ class User implements UserInterface, \Serializable
     private $roles = [];
 
     /**
-     * @var Doctrine\Common\Collections\Collection|Shop[]
+     * @var \Doctrine\Common\Collections\Collection|Shop[]
      *
      * @ORM\ManyToMany(targetEntity="Shop", inversedBy="$preferrerUsers")
      * @ORM\JoinTable(
@@ -72,6 +71,14 @@ class User implements UserInterface, \Serializable
      * )
      */
     private $preferredShops;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->preferredShops = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -121,6 +128,38 @@ class User implements UserInterface, \Serializable
     public function setRoles(array $roles): void
     {
         $this->roles = $roles;
+    }
+
+    /**
+     * Add preferredShop
+     *
+     * @param Shop $preferredShop
+     */
+    public function addPreferredShop(Shop $preferredShop): User
+    {
+        $this->preferredShops[] = $preferredShop;
+
+        return $this;
+    }
+
+    /**
+     * Remove preferredShop
+     *
+     * @param Shop $preferredShop
+     */
+    public function removePreferredShop(Shop $preferredShop)
+    {
+        $this->preferredShops->removeElement($preferredShop);
+    }
+
+    /**
+     * Get preferredShops
+     *
+     * @return \Doctrine\Common\Collections\Collection|Shop[]
+     */
+    public function getPreferredShops()
+    {
+        return $this->preferredShops;
     }
 
     /**

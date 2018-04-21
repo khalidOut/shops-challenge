@@ -54,8 +54,18 @@ class UserManager
         // check if a user with the same email already exists.
         $existingEmail = $this->users->findOneBy(['email' => $email]);
 
-        if (null !== $existingEmail) {
+        if (null !== $existingEmail)
+        {
             throw new RuntimeException(sprintf('There is already a user registered with the "%s" email.', $email));
+        }
+    }
+
+    public function addPreferredShop($user, $shop)
+    {
+        if(!$user->getPreferredShops()->contains($shop))
+        {
+            $user->addPreferredShop($shop);
+            $this->entityManager->flush();
         }
     }
 }
