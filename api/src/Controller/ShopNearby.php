@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Shop;
 use App\Utils\Validator;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Paginator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -15,7 +16,8 @@ class ShopNearby
     private $tokenStorage;
     private $validator;
 
-    public function __construct(RequestStack $requestStack, EntityManagerInterface $em, TokenStorageInterface $tokenStorage, Validator $validator)
+    public function __construct(RequestStack $requestStack, EntityManagerInterface $em,
+            TokenStorageInterface $tokenStorage, Validator $validator)
     {
         $this->requestStack = $requestStack;
         $this->entityManager = $em;
@@ -25,18 +27,23 @@ class ShopNearby
 
     public function __invoke()
     {
-        $location = $this->getLocationFromQuery();
+        $request = $this->requestStack->getCurrentRequest();
+
+        $location = $this->getLocationFromQuery($request);
         if(!$location)
             $location = ['latitude'=>0, 'longitude'=>0];
 
-        $user = $this->tokenStorage->getToken()->getUser();
-        $shops = $this->entityManager->getRepository('App\Entity\Shop')->findNearby($user->getId(), $location);
+        $page = $request->query->get('page') ? $request->query->get('page') : 1;
+        if(!$page)
+            $page = 1;
 
-        return $shops;
+        $user = $this->tokenStorage->getToken()->getUser();
+        $shops = $this->entityManager->getRepository('App\Entity\Shop')->findNearby($user->getId(), $location, $page);
+
+        return new Paginator($shops);
     }
 
-    private function getLocationFromQuery() {
-        $request = $this->requestStack->getCurrentRequest();
+    private function getLocationFromQuery($request) {
         $latitude = $request->query->get('latitude');
         $longitude = $request->query->get('longitude');
 
