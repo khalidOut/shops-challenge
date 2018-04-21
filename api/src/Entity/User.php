@@ -4,12 +4,14 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Controller\Register;
 
 /**
  * @ApiResource(
  *   collectionOperations={
+ *     "get",
  *     "register"={
  *         "method"="POST",
  *         "path"="/register",
@@ -19,11 +21,6 @@ use App\Controller\Register;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="user")
  *
- * Defines the properties of the User entity to represent the application users.
- * See https://symfony.com/doc/current/book/doctrine.html#creating-an-entity-class
- *
- * Tip: if you have an existing database, you can generate these entity class automatically.
- * See https://symfony.com/doc/current/cookbook/doctrine/reverse_engineering.html
  *
  * @author Ryan Weaver <weaverryan@gmail.com>
  * @author Javier Eguiluz <javier.eguiluz@gmail.com>
@@ -59,6 +56,22 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="json")
      */
     private $roles = [];
+
+    /**
+     * @var Doctrine\Common\Collections\Collection|Shop[]
+     *
+     * @ORM\ManyToMany(targetEntity="Shop", inversedBy="$preferrerUsers")
+     * @ORM\JoinTable(
+     *  name="user_preferred_shop",
+     *  joinColumns={
+     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *  },
+     *  inverseJoinColumns={
+     *      @ORM\JoinColumn(name="shop_id", referencedColumnName="id")
+     *  }
+     * )
+     */
+    private $preferredShops;
 
     public function getId(): int
     {

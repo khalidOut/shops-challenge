@@ -3,20 +3,23 @@
 namespace App\Controller;
 
 use App\Entity\Shop;
+use App\Utils\Validator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use App\Utils\Validator;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ShopNearby
 {
     private $requestStack;
     private $entityManager;
+    private $tokenStorage;
     private $validator;
 
-    public function __construct(RequestStack $requestStack, EntityManagerInterface $em, Validator $validator)
+    public function __construct(RequestStack $requestStack, EntityManagerInterface $em, TokenStorageInterface $tokenStorage, Validator $validator)
     {
         $this->requestStack = $requestStack;
         $this->entityManager = $em;
+        $this->tokenStorage = $tokenStorage;
         $this->validator = $validator;
     }
 
@@ -26,7 +29,8 @@ class ShopNearby
         if(!$location)
             $location = ['latitude'=>0, 'longitude'=>0];
 
-        $shops = $this->entityManager->getRepository('App\Entity\Shop')->findNearby($location);
+        $user = $this->tokenStorage->getToken()->getUser();
+        $shops = $this->entityManager->getRepository('App\Entity\Shop')->findNearby($user->getId(), $location);
 
         return $shops;
     }

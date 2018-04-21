@@ -4,7 +4,9 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use App\Controller\ShopNearby;
+use App\Controller\ShopPreferred;
 
 /**
 * @ApiResource(
@@ -14,6 +16,12 @@ use App\Controller\ShopNearby;
 *         "method"="GET",
 *         "path"="/shops/nearby",
 *         "controller"=ShopNearby::class,
+*         "defaults"={"_api_receive"=false}
+*     },
+*     "preferred"={
+*         "method"="GET",
+*         "path"="/shops/preferred",
+*         "controller"=ShopPreferred::class,
 *         "defaults"={"_api_receive"=false}
 *     }
 * })
@@ -57,6 +65,13 @@ class Shop
      * @ORM\Column(type="string", length=255)
      */
     private $longitude;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection|User[]
+     *
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="preferredShops")
+     */
+    private $preferrerUsers;
 
     public function getId()
     {
