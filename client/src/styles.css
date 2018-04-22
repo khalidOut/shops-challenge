@@ -6,3 +6,8 @@
 nav {
     margin-bottom: 20px!important;
 }
+
+.card-img-top {
+    object-fit: cover;
+    max-height: 200px;
+}

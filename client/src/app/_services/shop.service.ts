@@ -14,4 +14,8 @@ export class ShopService {
 
         return this.http.get<any>(url);
     }
+
+    like(id: number) {
+        return this.http.post<any>('/api/shops/' + id + '/like');
+    }
 }

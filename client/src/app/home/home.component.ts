@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
     page = 1;
     hasNextPage = false;
     location: Location;
+    likedShop: Shop = new Shop();
 
     constructor(
         private router: Router,
@@ -78,6 +79,32 @@ export class HomeComponent implements OnInit {
     private loadMore() {
         this.page++;
         this.loadShopsNearby();
+    }
+
+    private likeShop(shop: Shop) {
+        //used to hide the "Like" button for the shop and to remove it from the list
+        this.likedShop = shop;
+
+        this.shopService.like(shop.id)
+            .subscribe(res => {
+                this.hideLikedShop();
+            },
+            error => {
+                this.alertService.error(error.error.message);
+                //reset likedShop to show "Like" button
+                this.likedShop = new Shop();
+            });
+    }
+
+    private hideLikedShop() {
+        for (let i = 0; i < this.shops.length; i++) {
+            if (this.shops[i].id === this.likedShop.id) {
+                // remove shop from list
+                this.shops.splice(i, 1);
+                console.log(this.shops[i].name+' removed');
+                break;
+            }
+        }
     }
 
     private round(number, precision) {
