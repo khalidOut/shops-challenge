@@ -1,5 +1,29 @@
-﻿<div class="col-md-6 col-md-offset-3">
-    <h1>Home page</h1>
-    <p>You're logged in with Angular 2/5 and Angular CLI!!</p>
-    <p><a [routerLink]="['/login']">Logout</a></p>
+﻿<div class="col-md-12">
+    <h2>Nearby shops</h2>
+    <nav class="nav">
+        <a class="nav-link active" [routerLink]="['/']">Nearby shops</a>
+        <a class="nav-link" [routerLink]="['/preferred']">My preferred shops</a>
+        <a class="nav-link btn btn-outline-danger btn-sm" [routerLink]="['/login']">Logout</a>
+    </nav>
+    <div *ngIf="!location" class="alert alert-warning">
+        Location not available.
+    </div>
+    <div class="row">
+        <div class="col-md-3" *ngFor="let shop of shops; let i = index">
+            <div class="card">
+                <img class="card-img-top" src="{{ shop.picture }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ shop.name }}</h5>
+                    <p class="card-text">Distance : {{ shop.distance }} meters</p>
+                    <a href="#" class="btn btn-success pull-right">Like</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="hasNextPage" class="text-center">
+        <button (click)="loadMore()" type="button" class="btn btn-outline-primary col-md-6">Show more</button>
+    </div>
+    <div class="clearfix text-center">
+        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+    </div>
 </div>
