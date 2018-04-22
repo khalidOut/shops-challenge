@@ -11,6 +11,7 @@ import { AuthGuard } from './_guards/index';
 import { JwtInterceptor } from './_helpers/index';
 import { AlertService, AuthenticationService, UserService, ShopService } from './_services/index';
 import { HomeComponent } from './home/index';
+import { PreferredComponent } from './preferred/index';
 import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
 
@@ -19,6 +20,7 @@ import { RegisterComponent } from './register/index';
       AppComponent,
       AlertComponent,
       HomeComponent,
+      PreferredComponent,
       LoginComponent,
       RegisterComponent
   ],

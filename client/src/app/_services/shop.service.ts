@@ -15,7 +15,11 @@ export class ShopService {
         return this.http.get<any>(url);
     }
 
+    getPreferred(page: number) {
+        return this.http.get<any>('/api/shops/preferred?page=' + page);
+    }
+
     like(id: number) {
-        return this.http.post<any>('/api/shops/' + id + '/like');
+        return this.http.post<any>('/api/shops/' + id + '/like', null);
     }
 }

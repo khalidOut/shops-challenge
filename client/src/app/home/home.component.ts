@@ -68,8 +68,7 @@ export class HomeComponent implements OnInit {
                 this.loading = false;
 
                 //show "Load more" button if next page available
-                if(res['hydra:view']['hydra:next'])
-                    this.hasNextPage = true;
+                this.hasNextPage = res['hydra:view']['hydra:next'] ? true : false;
             },
             error => {
                 this.router.navigate(['/login']);
