@@ -43,8 +43,8 @@ class ShopRepository extends ServiceEntityRepository
             ->where('u.id IS NULL')
             ->setParameters($parameters)
             ->orderBy('distance', 'ASC')
-            ->setFirstResult(10 * ($page - 1))
-            ->setMaxResults(10);
+            ->setFirstResult(12 * ($page - 1))
+            ->setMaxResults(12);
 
         return new Paginator($q);
     }
@@ -58,8 +58,8 @@ class ShopRepository extends ServiceEntityRepository
         $q = $this->createQueryBuilder('s')
             ->join('s.preferrerUsers u', 'WITH u.id=:userId')
             ->setParameter('userId', $userId)
-            ->setFirstResult(10 * ($page - 1))
-            ->setMaxResults(10);
+            ->setFirstResult(12 * ($page - 1))
+            ->setMaxResults(12);
 
         return new Paginator($q);
     }
