@@ -9,6 +9,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Events;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface as JWTManager;
 
+use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -27,7 +28,12 @@ class Register
 
     public function __invoke(User $data)
     {
-        $user = $this->userManager->create($data->getEmail(), $data->getPassword());
+        try{
+            $user = $this->userManager->create($data->getEmail(), $data->getPassword());
+        }
+        catch(RuntimeException $e) {
+            return new JsonResponse(['message' => $e->getMessage()], 422);
+        }
 
         $jwt = $this->jwtManager->create($user);
         $response = new JsonResponse();
