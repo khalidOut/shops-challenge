@@ -1,27 +1,23 @@
-# Shops
+# Shops - Client App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.1.
+This client was created using Angular 5 and protected by JWT Token
 
-## Development server
+## Requirement
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Node 6.9.0 or higher.
+NPM 3 or higher.
+[Angular CLI](https://github.com/angular/angular-cli) version 1.6.1
 
-## Code scaffolding
+## Install
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Clone the projet.
+Run `npm Install`.
+Run `ng serve` and navigate to `http://localhost:4200/`.
 
-## Build
+## Configuration
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Go to `src/app/_helpers/jwt.interceptor.ts` to set your api server `base_url`. It's set by default to `http://shops.test`.
 
 ## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+For more help feel free to contact me at `khalid.outznit@gmail.com` or open a new issue.
