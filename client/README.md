@@ -11,6 +11,7 @@ NPM 3 or higher.
 ## Install
 
 Clone the projet.
+Run `cd client`.
 Run `npm Install`.
 Run `ng serve` and navigate to `http://localhost:4200/`.
 
