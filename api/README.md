@@ -32,6 +32,14 @@ Run `$ openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem
 
 The prompt will ask for a passphrase to continue, enter the same phrase as the first command.
 
+For Apache users add those rules to your VirtualHost configuration:
+
+```apache
+RewriteEngine On
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+```
+
 PS: for windows, you can use powerShell to run this commands (Ex : `powershell -Command "(C:\xampp\apache\bin\openssl.exe genrsa -out C:\xampp\htdocs\shops-challenge\api\config\jwt\private.pem -aes256 4096)"`);
 
 ## Database Configuration
