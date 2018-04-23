@@ -5,14 +5,19 @@ This client was created using Angular 5 and protected by JWT Token
 ## Requirement
 
 Node 6.9.0 or higher.
+
 NPM 3 or higher.
+
 [Angular CLI](https://github.com/angular/angular-cli) version 1.6.1
 
 ## Install
 
 Clone the projet.
+
 Run `cd client`.
+
 Run `npm Install`.
+
 Run `ng serve` and navigate to `http://localhost:4200/`.
 
 ## Configuration
